@@ -1,15 +1,19 @@
 #main code for execution
-import floor as fl, parking_lot as pl, ticket as tk, vehicle as vh, datetime as dt
+import floor as fl, ticket as tk, vehicle as vh, datetime as dt
 
 class ParkingGarage:
 
     def __init__(self, all_tickets={"active":{}, "paid":{}}, spaces_remaining = 20):
         self.all_tickets = all_tickets
         self.spaces_remaining = spaces_remaining
+        self.sales = 0
 
     def park(self):
         self.full_lot_check()
         this_plate = input("Please enter your plate number: ")
+        if this_plate in self.all_tickets["active"]:
+            print("This car already has an active ticket")
+            self.main()
         self.add_ticket(tk.Ticket(this_plate, start_time = dt.datetime.now()))
 
     def add_ticket(self, this_ticket):
@@ -20,7 +24,11 @@ class ParkingGarage:
 
     def leave_garage(self):
         this_plate = input("Please enter plate number for car leaving: ")
-        self.all_tickets["active"][this_plate].begin_checkout()
+        try:
+            self.all_tickets["active"][this_plate].begin_checkout()
+        except:
+            print("This license plate does not exist in the garage")
+            self.main()
         self.spaces_remaining +=1
         self.all_tickets["paid"][this_plate] = self.all_tickets["active"][this_plate]
         del(self.all_tickets["active"][this_plate])
@@ -61,8 +69,13 @@ class ParkingGarage:
                 print(f'    Ticket value: ${ticket_data.total}')
         self.main()
 
+    def print_sales(self):
+        for plate, ticket_data in self.all_tickets["paid"].items():
+            pass
+
     def main(self):
         next_action = input("Does the next car wish to 'enter' or 'exit' the parking garage?\n'Status' to view garage spots and tickets info,\n'history' to view paid tickets, or 'quit' to stop managing garage: ").lower()
+
         if "enter" in next_action:
             self.park()
         elif "exit" in next_action:
@@ -71,9 +84,12 @@ class ParkingGarage:
             self.garage_status()
         elif "history" in next_action:
             self.ticket_history()
-        else:
+        elif "quit" in next_action:
             print("Thanks for managing the garage.")
             return(self.all_tickets)
+        else:
+            print("Please enter a vaild key")
+            self.main()
 
 
 startThings = ParkingGarage()
