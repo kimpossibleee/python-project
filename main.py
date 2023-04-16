@@ -1,5 +1,6 @@
 #main code for execution
 import floor as fl, ticket as tk, vehicle as vh, datetime as dt
+from os import system, name
 
 class ParkingGarage:
 
@@ -30,8 +31,10 @@ class ParkingGarage:
             print("This license plate does not exist in the garage")
             self.main()
         self.spaces_remaining +=1
+        self.sales += float(self.all_tickets["active"][this_plate].total)
         self.all_tickets["paid"][this_plate] = self.all_tickets["active"][this_plate]
         del(self.all_tickets["active"][this_plate])
+
         self.main()
 
     def full_lot_check(self):
@@ -66,16 +69,21 @@ class ParkingGarage:
                 print(f'  License plate: {plate}')
                 print(f'    Entry time: {ticket_data.format_start_time}')
                 print(f'    Exit time: {ticket_data.format_end_time}')
-                print(f'    Ticket value: ${ticket_data.total}')
+                print(f'    Ticket value: ${ticket_data.total:.2f}')
+            print(f"\nTotal Sales: ${self.sales:.2f}")
+            print("\n______________________________________________")
         self.main()
 
-    def print_sales(self):
-        for plate, ticket_data in self.all_tickets["paid"].items():
-            pass
+    def clear(self):
+        if name == 'nt':
+            _ = system('cls')
+        else:
+            _ = system('clear')
+
 
     def main(self):
-        next_action = input("Does the next car wish to 'enter' or 'exit' the parking garage?\n'Status' to view garage spots and tickets info,\n'history' to view paid tickets, or 'quit' to stop managing garage: ").lower()
-
+        next_action = input("\nDoes the next car wish to 'enter' or 'exit' the parking garage?\n'Status' to view garage spots and tickets info,\n'history' to view paid tickets, or 'quit' to stop managing garage: ").lower()
+        self.clear()
         if "enter" in next_action:
             self.park()
         elif "exit" in next_action:
@@ -91,7 +99,16 @@ class ParkingGarage:
             print("Please enter a vaild key")
             self.main()
 
-
 startThings = ParkingGarage()
-
 startThings.main()
+
+'''
+Active tickets:
+  License plate: car1
+    Entry time: 2023-04-16 05:03:07
+
+License Plate Number: car1
+Enter: 2023-04-16 05:03:07.125495
+Leave: 2023-04-16 05:04:38
+Paid: $0.09
+'''

@@ -13,6 +13,7 @@ class Ticket:
         self.start_time = start_time
         # self.end_time = dummy value that will be replaced when driver pays
         self.rate = rate
+        self.paid = 0
         self.format_start_time = dt.strptime(str(self.start_time.replace(microsecond=0)), '%Y-%m-%d %H:%M:%S')
 
     # *** Enter 'end_time' in "HH:MM:SS" military time format ***
@@ -27,11 +28,11 @@ class Ticket:
         print(ascii.car_art)
         print(ascii.ticket_art)
         print(f"License Plate Number: {self.plate_num}")
-        print(f"Enter: {self.start_time}")
+        print(f"Enter: {self.format_start_time}")
 
     def print_receipt(self):
         print(ascii.receipt_art)
         print(f"License Plate Number: {self.plate_num}")
-        print(f"Enter: {self.start_time}")
-        print(f"Leave: {self.end_time}")
+        print(f"Enter: {self.format_start_time}")
+        print(f"Leave: {self.format_end_time}")
         print(f"Paid: ${self.total:.2f}")
