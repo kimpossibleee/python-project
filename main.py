@@ -58,7 +58,6 @@ class ParkingGarage:
             for plate, ticket_data in self.all_tickets["active"].items():
                 print(f'  License plate: {plate}')
                 print(f'    Entry time: {ticket_data.format_start_time}')
-        self.main()
 
     def ticket_history(self):
         if not self.all_tickets["paid"]:
@@ -72,7 +71,15 @@ class ParkingGarage:
                 print(f'    Ticket value: ${ticket_data.total:.2f}')
             print(f"\nTotal Sales: ${self.sales:.2f}")
             print("\n______________________________________________")
-        self.main()
+
+# The master log is the record that is going to show when you quit the garage.
+    def master_log(self):
+        print("---MASTER LOG---\n")
+        self.garage_status()
+        self.ticket_history()
+        print("\n")
+
+
 
     def clear(self):
         if name == 'nt':
@@ -90,25 +97,17 @@ class ParkingGarage:
             self.leave_check()
         elif "status" in next_action:
             self.garage_status()
+            self.main()
         elif "history" in next_action:
             self.ticket_history()
+            self.main()
         elif "quit" in next_action:
-            print("Thanks for managing the garage.")
-            return(self.all_tickets)
+            print("Thanks for managing the garage.\n")
+            self.master_log()
+
         else:
             print("Please enter a vaild key")
             self.main()
 
 startThings = ParkingGarage()
 startThings.main()
-
-'''
-Active tickets:
-  License plate: car1
-    Entry time: 2023-04-16 05:03:07
-
-License Plate Number: car1
-Enter: 2023-04-16 05:03:07.125495
-Leave: 2023-04-16 05:04:38
-Paid: $0.09
-'''
