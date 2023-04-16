@@ -8,7 +8,7 @@ import ascii
 class Ticket:
     # *** Enter 'start_time' in "HH:MM:SS" military time format ***
     #  'rate' and 'maximum' default is set. <-- useful to add these parameters in the case of special events or holidays
-    def __init__(self, plate_num, start_time, rate=.001):
+    def __init__(self, plate_num, start_time, rate=.01):
         self.plate_num = plate_num
         self.start_time = start_time
         # self.end_time = dummy value that will be replaced when driver pays

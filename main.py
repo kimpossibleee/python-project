@@ -2,6 +2,9 @@
 import ticket as tk, datetime as dt
 from os import system, name
 
+def print_garage():
+    print("hello")
+
 class ParkingGarage:
 
     def __init__(self, all_tickets={"active":{}, "paid":{}}, spaces_remaining = 20):
@@ -31,8 +34,8 @@ class ParkingGarage:
             print("This license plate does not exist in the garage")
             self.main()
         self.spaces_remaining +=1
-        self.sales += float(self.all_tickets["active"][this_plate].total)
         self.all_tickets["paid"][this_plate] = self.all_tickets["active"][this_plate]
+        self.sales += float(self.all_tickets["paid"][this_plate].total)
         del(self.all_tickets["active"][this_plate])
 
     def full_lot_check(self):
