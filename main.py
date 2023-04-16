@@ -1,5 +1,5 @@
 #main code for execution
-import floor as fl, ticket as tk, vehicle as vh, datetime as dt
+import ticket as tk, datetime as dt
 from os import system, name
 
 class ParkingGarage:
