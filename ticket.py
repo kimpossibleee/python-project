@@ -24,8 +24,8 @@ class Ticket:
         self.total = (self.end_time - self.start_time).total_seconds() * self.rate
         self.print_receipt()
 
-    def print_ticket(self):
-        print(ascii.car_art)
+    def print_ticket(self, display_plate):
+        print(ascii.car_art.format(display_plate))
         print(ascii.ticket_art)
         print(f"License Plate Number: {self.plate_num}")
         print(f"Enter: {self.format_start_time}")
