@@ -23,7 +23,7 @@ class ParkingGarage:
     def add_ticket(self, this_ticket):
         self.all_tickets["active"][this_ticket.plate_num] = this_ticket
         self.spaces_remaining -= 1
-        this_ticket.print_ticket()
+        this_ticket.print_ticket(this_ticket.plate_num)
 
 
     def leave_garage(self):
